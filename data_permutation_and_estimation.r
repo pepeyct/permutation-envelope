@@ -1,4 +1,50 @@
 set.seed(123)
+####################################################################################################
+path= getwd()
+workpath=paste0(path,"/data/Thomas data1.Rdata")
+load(workpath)
+#load("C:/Users/CZhao/Dropbox/Research/PairCorrelationFunction/simulation/SimulationFinal/simulation with selection/setting1/rho1_sigma0.025/rho=1.0/data/Thomas data1.Rdata")
+m=length(process)
+
+
+
+# first get all process length
+process_len = sapply(process, length)
+# combine all data points into one big vector 
+events_process = unlist(process)
+# generate 50 simulation permuation for all data points 
+
+i = 1
+while (i <= m){
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################
 library(snowfall)
 library(snow)
 # read data into r
