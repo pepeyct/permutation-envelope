@@ -1,49 +1,37 @@
 set.seed(123)
 ####################################################################################################
-path= getwd()
-workpath=paste0(path,"/data/Thomas data1.Rdata")
-load(workpath)
-#load("C:/Users/CZhao/Dropbox/Research/PairCorrelationFunction/simulation/SimulationFinal/simulation with selection/setting1/rho1_sigma0.025/rho=1.0/data/Thomas data1.Rdata")
+setwd("C:/Users/CZhao/Dropbox/Research/PairCorrelationFunction/data application/wb_application/topics/pemutation envelope")
+workpath= getwd()
+#workpath=paste0(path,"/data/Thomas data1.Rdata")
+# load(workpath)
+load("C:/Users/CZhao/Dropbox/Research/PairCorrelationFunction/simulation/SimulationFinal/simulation with selection/setting1/rho1_sigma0.025/rho=1.0/data/Thomas data1.Rdata")
 m=length(process)
-
-
 
 # first get all process length
 process_len = sapply(process, length)
 # combine all data points into one big vector 
 events_process = unlist(process)
 # generate 50 simulation permuation for all data points 
+TT=30
+days=1:TT
+vec=process[[1]]
+N=100 # how many permutaion data need to be generated
 
-i = 1
-while (i <= m){
-  
+
+permu_dat_by_days=function(vec){
+  days = factor(floor(vec),levels = 1:TT)
+  timeDays= vec-floor(vec)
+  days_dat= data.frame(days,timeDays)
+  permu_days = permute(1:TT)
+  days_dat= days_dat %>% mutate(newdays=permu_days[days])
+  sort(days_dat$newdays+days_dat$timeDays)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+###
+for(sim in 1:100){
+  process_permu = lapply(process,permu_dat_by_days)
+  print(paste0("permulation data sim=",sim))
+  save(process_permu,file = paste0(path,"/data/permulation data ",sim,".RData"))
+}
 #########################################################################
 library(snowfall)
 library(snow)
@@ -56,11 +44,12 @@ h.max = 0.016
 h.list = seq(h.min,h.max,by= 0.002)
 lcEstimator<- function(sim){
   #######################
-  load(paste0(workpath,"/data/Thomas data",sim,".Rdata"))
+  load(paste0(workpath,"/data/permulation data ",sim,".RData"))
   ptm<-proc.time()
   #TT=30
   R.max = R+2*h.max
   #################################################################################
+  process=process_permu
   N  =length(process)
   ptm<-proc.time()
   event_num_N = sapply(process,length)
@@ -121,7 +110,7 @@ lcEstimator<- function(sim){
 }
 #######################
 ptm<-proc.time()
-sfInit(parallel=TRUE, cpus=cpu_num,type = "SOCK")
+sfInit(parallel=TRUE, cpus=4,type = "SOCK")
 # import variables into workers from master
 sfExport("lcEstimator","workpath","h.max","R",
          "TT","n.h","h.list","h.min")
