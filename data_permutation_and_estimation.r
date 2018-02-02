@@ -1,4 +1,6 @@
 set.seed(123)
+library(gtools)
+library(dplyr)
 ####################################################################################################
 setwd("C:/Users/CZhao/Dropbox/Research/PairCorrelationFunction/data application/wb_application/topics/pemutation envelope")
 workpath= getwd()
@@ -19,7 +21,7 @@ days=1:TT
 vec=process[[1]]
 N=100 # how many permutaion data need to be generated
 
-
+# permuatation across 30 days within each person 
 permu_dat_by_days=function(vec){
   days = factor(floor(vec),levels = 1:TT)
   timeDays= vec-floor(vec)
@@ -32,7 +34,7 @@ permu_dat_by_days=function(vec){
 for(sim in 1:100){
   process_permu = lapply(process,permu_dat_by_days)
   print(paste0("permulation data sim=",sim))
-  save(process_permu,file = paste0(path,"/data/permulation data ",sim,".RData"))
+  save(process_permu,file = paste0(workpath,"/data/permulation data ",sim,".RData"))
 }
 #########################################################################
 library(snowfall)
