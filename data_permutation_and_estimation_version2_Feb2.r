@@ -1,6 +1,7 @@
 set.seed(123)
 library(gtools)
 library(dplyr)
+library(MASS)
 ####################################################################################################
 setwd("C:/Users/CZhao/Dropbox/Research/PairCorrelationFunction/data application/wb_application/topics/pemutation envelope")
 workpath= getwd()
@@ -35,7 +36,7 @@ for(sim in 1:N){
   all_person6 = all_person5%>%mutate(time=days_aft_TT+timeDays)
   process_permu = split(all_person6$time,all_person6$per_indi_aft)
   print(paste0("permulation data sim=",sim))
-  save(process_permu,file = paste0(workpath,"/data/permulation data ",sim,".RData"))
+  save(process_permu,file = paste0(workpath,"/data/version 2 permulation data ",sim,".RData"))
 }
 #########################################################################
 library(snowfall)
@@ -49,7 +50,7 @@ h.max = 0.016
 h.list = seq(h.min,h.max,by= 0.002)
 lcEstimator<- function(sim){
   #######################
-  load(paste0(workpath,"/data/permulation data ",sim,".RData"))
+  load(paste0(workpath,"/data/version 2 permulation data ",sim,".RData"))
   ptm<-proc.time()
   #TT=30
   R.max = R+2*h.max
