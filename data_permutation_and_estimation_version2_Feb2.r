@@ -1,7 +1,7 @@
 set.seed(123)
 library(gtools)
 library(dplyr)
-library(MASS)
+
 ####################################################################################################
 setwd("C:/Users/CZhao/Dropbox/Research/PairCorrelationFunction/data application/wb_application/topics/pemutation envelope")
 workpath= getwd()
