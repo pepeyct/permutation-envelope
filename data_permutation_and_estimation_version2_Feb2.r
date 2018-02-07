@@ -10,6 +10,7 @@ workpath= getwd()
 load("C:/Users/CZhao/Dropbox/Research/PairCorrelationFunction/simulation/SimulationFinal/simulation with selection/setting1/rho1_sigma0.025/rho=1.0/data/Thomas data1.Rdata")
 m=length(process)
 
+#
 # first get all process length
 process_len = sapply(process, length)
 # combine all data points into one big vector 
